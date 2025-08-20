@@ -1,0 +1,99 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  color: white;
+  background: #141414;
+  font-family: "Open Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 12px 0 12px;
+}
+
+.header-container h3 {
+  padding: 0 16px 0 16px;
+}
+
+.search-container {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.inputBuscar {
+  height: 40px;
+  width: 80%;
+  border-start-start-radius: 12px;
+  border-end-start-radius: 12px;
+  border: none;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  outline: none;
+}
+
+.btnBuscar {
+  border: none;
+  height: 40px;
+  width: 40px;
+  border-start-end-radius: 12px;
+  border-end-end-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+}
+
+.container-peliculas {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  flex-wrap: wrap;
+  align-items: start;
+  gap: 20px;
+  margin: 12px;
+}
+
+.container-pelicula {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 8px;
+}
+
+.img-pelicula {
+  width: 100%;
+  border-radius: 8px;
+  transition: all 0.3s, box-shadow 0.3s;
+}
+
+.img-pelicula:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+.titulo-pelicula {
+  font-size: 12px;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 4px;
+}
+
+.anio-pelicula {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  padding-left: 4px;
+}
