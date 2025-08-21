@@ -19,12 +19,14 @@
     <title>FilmVault</title>
   </head>
   <body>
-    <section>
+    <section class="section-header">
       <div class="header-container">
         <h3>
-          <link rel="stylesheet" href="" /><i
-            class="fa-solid fa-house-chimney"
-          ></i>
+          <a href="">
+            <link rel="stylesheet" href="" /><i
+              class="fa-solid fa-house-chimney"
+            ></i>
+          </a>
         </h3>
         <div class="search-container">
           <input
@@ -37,11 +39,19 @@
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
         </div>
-        <h3><i class="fa-solid fa-star" style="color: #ffd43b"></i></h3>
+        <h3>
+          <a href="">
+            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+          </a>
+        </h3>
       </div>
     </section>
 
-    <div class="container-peliculas" id="resultadoPelicula"></div>
+    <section class="section-main"></section>
+
+    <section class="section-peliculas">
+      <div class="container-peliculas" id="resultadoPelicula"></div>
+    </section>
 
     <script src="js/main.js"></script>
   </body>
