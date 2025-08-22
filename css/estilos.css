@@ -45,7 +45,7 @@ body {
   border-end-start-radius: 12px;
   border: none;
   padding: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #ffffff0d;
   color: white;
   outline: none;
 }
@@ -56,7 +56,7 @@ body {
   width: 40px;
   border-start-end-radius: 12px;
   border-end-end-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: #ffffff0d;
   color: white;
 }
 
@@ -92,6 +92,7 @@ body {
   justify-content: space-between;
   align-items: center;
   padding: 0 8px 0 8px;
+  gap: 10px;
 }
 
 .titulo-pelicula {
@@ -105,4 +106,21 @@ body {
   font-size: 12px;
   font-family: "Roboto", sans-serif;
   font-weight: 300;
+}
+
+.generos-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.generos {
+  background: grey;
+  padding: 4px 6px 4px 6px;
+  border-radius: 12px;
+}
+
+.titulo-genero {
+  margin-left: 12px;
 }
