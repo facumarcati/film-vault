@@ -94,16 +94,23 @@ async function buscarPelicula() {
           });
 
           peliculaElement.innerHTML = `
-          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w200${
+          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.poster_path
           }" alt="${pelicula.title}">
-            <div class="titulo-anio-pelicula"><h2 class="titulo-pelicula">${
+            <div class="datos-pelicula">
+            <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
             }</h2>
-            <h2 class="anio-pelicula"> ${
+            <div class="container-star-icon"><h2><svg class="star-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg></h2></div></div>
+            <div class="anio-duracion-pelicula"><h2 class="anio-pelicula"> ${
               pelicula.release_date ? pelicula.release_date.slice(0, 4) : "N/A"
-            }</h2></div>
-            <h2>${duracion > 0 ? duracion : "N/A"}</h2>`;
+            }</h2>
+            <p class="duracion-pelicula"> •</p>
+            <h2 class="duracion-pelicula">${
+              duracion > 0 ? duracion + " min" : "N/A"
+            }</h2></div></div>`;
 
           peliculaElement.appendChild(generosContainer);
 
@@ -162,16 +169,23 @@ async function buscarPeliculaPorGenero(genero) {
           });
 
           peliculaElement.innerHTML = `
-          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w200${
+          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.poster_path
           }" alt="${pelicula.title}">
-            <div class="titulo-anio-pelicula"><h2 class="titulo-pelicula">${
+            <div class="datos-pelicula">
+            <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
             }</h2>
-            <h2 class="anio-pelicula"> ${
+            <div class="container-star-icon"><h2><svg class="star-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg></h2></div></div>
+            <div class="anio-duracion-pelicula"><h2 class="anio-pelicula"> ${
               pelicula.release_date ? pelicula.release_date.slice(0, 4) : "N/A"
-            }</h2></div>
-            <h2>${duracion > 0 ? duracion : "N/A"}</h2>`;
+            }</h2>
+            <p class="duracion-pelicula"> •</p>
+            <h2 class="duracion-pelicula">${
+              duracion > 0 ? duracion + " min" : "N/A"
+            }</h2></div></div>`;
 
           peliculaElement.appendChild(generosContainer);
 
@@ -188,7 +202,9 @@ async function buscarPeliculaPorGenero(genero) {
 
 document.addEventListener("DOMContentLoaded", function () {
   generosPeliculas();
-  document.getElementById("resultadoPeliculaGenero").style.display = "block";
+  document.getElementById("resultadoPeliculaGenero").style.display = "flex";
+  document.getElementById("resultadoPeliculaGenero").style.flexDirection =
+    "column";
 
   buscarPeliculaPorGenero("Comedia");
   buscarPeliculaPorGenero("Accion");
@@ -205,11 +221,8 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // TO DO
-// Agregar a favoritos - agregar un boton o icono en las peliculas para poder
-// agregarlas a favoritos
 // Lista de favoritos - mostrar las peliculas que se agregaron a favoritos.
 // Hacerlo con localStorage. Permitir que se puedan borrar de esa lista
 // Agregar un boton para volver al header de la pagina
-// Hacer responsive a PC
 // Agregar footer - OPCIONAL
 // Modo oscuro/claro - ULTIMO

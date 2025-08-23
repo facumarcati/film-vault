@@ -60,6 +60,10 @@ body {
   color: white;
 }
 
+.container-peliculas-generos {
+  gap: 20px;
+}
+
 .container-peliculas {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -78,6 +82,8 @@ body {
 
 .img-pelicula {
   width: 100%;
+  height: auto;
+  object-fit: cover;
   border-radius: 8px;
   transition: all 0.3s, box-shadow 0.3s;
 }
@@ -87,25 +93,75 @@ body {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
-.titulo-anio-pelicula {
+.datos-pelicula {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 4px;
+}
+
+.titulo-star {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 8px 0 8px;
-  gap: 10px;
+  gap: 16px;
 }
 
 .titulo-pelicula {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
   display: flex;
 }
 
+.container-star-icon {
+  width: 32px;
+  height: 32px;
+  background: #ffffff1a;
+  border: 1px solid #ffffff1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.container-star-icon:hover {
+  transform: scale(1.2);
+  border-color: #ffd70080;
+}
+
+.star-icon {
+  height: 16px;
+  fill: none;
+  stroke: #999;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.container-star-icon:hover .star-icon {
+  stroke: #ffd700;
+}
+
+.anio-duracion-pelicula {
+  display: flex;
+  gap: 10px;
+}
+
 .anio-pelicula {
   font-size: 12px;
   font-family: "Roboto", sans-serif;
-  font-weight: 300;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.duracion-pelicula {
+  font-size: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  color: #999;
 }
 
 .generos-container {
@@ -113,14 +169,103 @@ body {
   gap: 8px;
   flex-wrap: wrap;
   font-size: 12px;
+  padding-left: 2px;
 }
 
 .generos {
-  background: grey;
+  background: #2a2a2a;
   padding: 4px 6px 4px 6px;
   border-radius: 12px;
 }
 
 .titulo-genero {
   margin-left: 12px;
+}
+
+@media (min-width: 552px) {
+  .container-peliculas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .titulo-pelicula {
+    font-size: 16px;
+  }
+
+  .anio-pelicula,
+  .duracion-pelicula {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 992px) {
+  body {
+    padding: 0 10% 0 10%;
+  }
+
+  .container-peliculas {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .img-pelicula {
+    width: 100%;
+  }
+
+  .titulo-pelicula {
+    font-size: 16px;
+  }
+
+  .anio-pelicula,
+  .duracion-pelicula {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    padding: 0 10% 0 10%;
+  }
+
+  .container-peliculas {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .img-pelicula {
+    width: 100%;
+  }
+
+  .titulo-pelicula {
+    font-size: 16px;
+  }
+
+  .anio-pelicula,
+  .duracion-pelicula {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 1400px) {
+  body {
+    padding: 0 10% 0 10%;
+  }
+
+  .container-peliculas {
+    grid-template-columns: repeat(6, 1fr);
+  }
+
+  .img-pelicula {
+    width: 100%;
+  }
+
+  .titulo-pelicula {
+    font-size: 16px;
+  }
+
+  .anio-pelicula,
+  .duracion-pelicula {
+    font-size: 14px;
+  }
+
+  .generos {
+    padding: 6px 8px 6px 8px;
+  }
 }
