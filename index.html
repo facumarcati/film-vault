@@ -17,6 +17,7 @@
       rel="stylesheet"
     />
     <title>FilmVault</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.png" />
   </head>
   <body>
     <section class="section-header">
@@ -41,13 +42,17 @@
         </div>
         <h3>
           <a href="">
-            <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+            <i
+              id="peliculasFavoritas"
+              class="fa-solid fa-star"
+              style="color: #ffd43b"
+            ></i>
           </a>
         </h3>
       </div>
     </section>
 
-    <section class="section-main">
+    <section id="section-main" class="section-main">
       <div class="container-peliculas-generos" id="resultadoPeliculaGenero">
         <div>
           <h2 class="titulo-genero">Peliculas de Comedia</h2>
@@ -64,8 +69,17 @@
       </div>
     </section>
 
-    <section class="section-peliculas">
+    <section id="section-peliculas" class="section-peliculas">
+      <h2 class="container-peliculas-txt" id="txtResultadoPelicula"></h2>
       <div class="container-peliculas" id="resultadoPelicula"></div>
+    </section>
+
+    <section
+      id="section-peliculas-favoritas"
+      class="section-peliculas-favoritas"
+    >
+      <h2 class="container-peliculas-txt" id="txtResultadoPeliculaFav"></h2>
+      <div class="container-peliculas" id="resultadoPeliculasFavoritas"></div>
     </section>
 
     <script src="js/main.js"></script>

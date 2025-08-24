@@ -73,6 +73,10 @@ body {
   margin: 12px;
 }
 
+.container-peliculas-txt {
+  margin: 0 0 20px 12px;
+}
+
 .container-pelicula {
   display: flex;
   flex-direction: column;
@@ -114,7 +118,7 @@ body {
   display: flex;
 }
 
-.container-star-icon {
+.container-icon {
   width: 32px;
   height: 32px;
   background: #ffffff1a;
@@ -128,7 +132,7 @@ body {
   flex-shrink: 0;
 }
 
-.container-star-icon:hover {
+.container-icon:hover {
   transform: scale(1.2);
   border-color: #ffd70080;
 }
@@ -141,8 +145,18 @@ body {
   transition: all 0.3s ease;
 }
 
-.container-star-icon:hover .star-icon {
+.container-icon:hover .star-icon {
   stroke: #ffd700;
+}
+
+.x-icon {
+  height: 16px;
+  fill: #999;
+  transition: all 0.3s ease;
+}
+
+.container-icon:hover .x-icon {
+  fill: #ffd700;
 }
 
 .anio-duracion-pelicula {

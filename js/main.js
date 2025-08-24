@@ -1,5 +1,27 @@
 const apiKey = "89177e61dbef1aabc1501bd1f683547d";
 
+let peliculasFavoritas = [];
+
+function guardarListaPeliculasFavoritas() {
+  const listaPeliFavsJSON = JSON.stringify(peliculasFavoritas);
+  localStorage.setItem("listaPeliculasFavoritas", listaPeliFavsJSON);
+}
+
+let listaPeliculasFavoritas = localStorage.getItem("listaPeliculasFavoritas");
+
+if (listaPeliculasFavoritas) {
+  peliculasFavoritas = JSON.parse(listaPeliculasFavoritas);
+}
+
+const Pelicula = function (id, titulo, imagen, anio, duracion, generos) {
+  this.id = id;
+  this.titulo = titulo;
+  this.imagen = imagen;
+  this.anio = anio;
+  this.duracion = duracion;
+  this.generos = generos;
+};
+
 const Genero = function (id, genero) {
   this.id = id;
   this.genero = genero;
@@ -48,7 +70,8 @@ async function buscarPelicula() {
   const txtPelicula = document.getElementById("txtPelicula").value;
   const resultadoPelicula = document.getElementById("resultadoPelicula");
 
-  if (txtPelicula === "") {
+  if (txtPelicula === "" || txtPelicula.length < 4) {
+    document.getElementById("resultadoPeliculaGenero").style.display = "flex";
     return;
   }
 
@@ -69,6 +92,9 @@ async function buscarPelicula() {
         "No se encontraron películas con ese nombre";
       return;
     }
+
+    document.getElementById("txtResultadoPelicula").innerHTML =
+      "Peliculas de " + txtPelicula;
 
     peliculas.forEach((pelicula) => {
       const peliculaElement = document.createElement("div");
@@ -101,7 +127,7 @@ async function buscarPelicula() {
             <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
             }</h2>
-            <div class="container-star-icon"><h2><svg class="star-icon" viewBox="0 0 24 24">
+            <div class="container-icon"><h2><svg class="star-icon" viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg></h2></div></div>
             <div class="anio-duracion-pelicula"><h2 class="anio-pelicula"> ${
@@ -113,6 +139,24 @@ async function buscarPelicula() {
             }</h2></div></div>`;
 
           peliculaElement.appendChild(generosContainer);
+
+          const iconoFavoritos = peliculaElement.querySelectorAll(".star-icon");
+          iconoFavoritos.forEach((icono) => {
+            icono.addEventListener("click", () => {
+              const peliculaFavorita = new Pelicula(
+                pelicula.id,
+                pelicula.title,
+                pelicula.poster_path,
+                pelicula.release_date
+                  ? pelicula.release_date.slice(0, 4)
+                  : "N/A",
+                duracion > 0 ? duracion : "N/A",
+                generosPelicula.map((g) => g.name)
+              );
+
+              agregarPeliculaFavorita(peliculaFavorita);
+            });
+          });
 
           if (pelicula.poster_path) {
             resultadoPelicula.appendChild(peliculaElement);
@@ -176,7 +220,8 @@ async function buscarPeliculaPorGenero(genero) {
             <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
             }</h2>
-            <div class="container-star-icon"><h2><svg class="star-icon" viewBox="0 0 24 24">
+            <div class="container-icon">
+            <h2><svg class="star-icon" viewBox="0 0 24 24">
                         <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                     </svg></h2></div></div>
             <div class="anio-duracion-pelicula"><h2 class="anio-pelicula"> ${
@@ -189,6 +234,24 @@ async function buscarPeliculaPorGenero(genero) {
 
           peliculaElement.appendChild(generosContainer);
 
+          const iconoFavoritos = peliculaElement.querySelectorAll(".star-icon");
+          iconoFavoritos.forEach((icono) => {
+            icono.addEventListener("click", () => {
+              const peliculaFavorita = new Pelicula(
+                pelicula.id,
+                pelicula.title,
+                pelicula.poster_path,
+                pelicula.release_date
+                  ? pelicula.release_date.slice(0, 4)
+                  : "N/A",
+                duracion > 0 ? duracion : "N/A",
+                generosPelicula.map((g) => g.name)
+              );
+
+              agregarPeliculaFavorita(peliculaFavorita);
+            });
+          });
+
           if (pelicula.poster_path) {
             resultadoPelicula.appendChild(peliculaElement);
           }
@@ -200,8 +263,80 @@ async function buscarPeliculaPorGenero(genero) {
   }
 }
 
+function agregarPeliculaFavorita(peliculaFav) {
+  const peliculaExiste = peliculasFavoritas.find(
+    (p) => p.id === peliculaFav.id
+  );
+
+  if (peliculaExiste) {
+    alert("ESA PELICULA YA SE ENCUENTRA EN FAVORITOS");
+    return;
+  }
+
+  peliculasFavoritas.push(peliculaFav);
+  alert("PELICULA AGREGADA CORRECTAMENTE");
+
+  guardarListaPeliculasFavoritas();
+}
+
+function mostrarPeliculasFavoritas() {
+  const resultadoPelicula = document.getElementById(
+    "resultadoPeliculasFavoritas"
+  );
+  resultadoPelicula.innerHTML = "";
+
+  document.getElementById("txtResultadoPeliculaFav").innerHTML =
+    "Peliculas favoritas";
+
+  try {
+    const peliculas = peliculasFavoritas;
+
+    if (peliculas.length === 0) {
+      resultadoPelicula.innerHTML = "No hay peliculas guardadas";
+      return;
+    }
+
+    peliculas.forEach((pelicula) => {
+      const peliculaElement = document.createElement("div");
+      peliculaElement.classList.add("container-pelicula");
+
+      const generosContainer = document.createElement("div");
+      generosContainer.classList.add("generos-container");
+
+      pelicula.generos.forEach((genero) => {
+        const generoElement = document.createElement("span");
+        generoElement.textContent = genero;
+        generoElement.classList.add("generos");
+        generosContainer.appendChild(generoElement);
+      });
+
+      peliculaElement.innerHTML = `
+          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
+            pelicula.imagen
+          }" alt="${pelicula.titulo}">
+            <div class="datos-pelicula">
+            <div class="titulo-star"><h2 class="titulo-pelicula">${
+              pelicula.titulo
+            }</h2>
+            <div class="container-icon">
+            <h2><svg class="x-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640"><!--!Font Awesome Free v7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M183.1 137.4C170.6 124.9 150.3 124.9 137.8 137.4C125.3 149.9 125.3 170.2 137.8 182.7L275.2 320L137.9 457.4C125.4 469.9 125.4 490.2 137.9 502.7C150.4 515.2 170.7 515.2 183.2 502.7L320.5 365.3L457.9 502.6C470.4 515.1 490.7 515.1 503.2 502.6C515.7 490.1 515.7 469.8 503.2 457.3L365.8 320L503.1 182.6C515.6 170.1 515.6 149.8 503.1 137.3C490.6 124.8 470.3 124.8 457.8 137.3L320.5 274.7L183.1 137.4z"/></svg></h2></div></div>
+            <div class="anio-duracion-pelicula"><h2 class="anio-pelicula"> ${
+              pelicula.anio ? pelicula.anio : "N/A"
+            }</h2>
+            <p class="duracion-pelicula"> •</p>
+            <h2 class="duracion-pelicula">${
+              pelicula.duracion > 0 ? pelicula.duracion + " min" : "N/A"
+            }</h2></div></div>`;
+
+      peliculaElement.appendChild(generosContainer);
+      resultadoPelicula.appendChild(peliculaElement);
+    });
+  } catch (error) {
+    alert("Ocurrió un error al buscar la película: " + error);
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function () {
-  generosPeliculas();
   document.getElementById("resultadoPeliculaGenero").style.display = "flex";
   document.getElementById("resultadoPeliculaGenero").style.flexDirection =
     "column";
@@ -216,13 +351,28 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
 
       document.getElementById("resultadoPeliculaGenero").style.display = "none";
+      document.getElementById("section-peliculas-favoritas").style.display =
+        "none";
+      document.getElementById("section-main").style.display = "none";
       buscarPelicula();
+    });
+
+  document
+    .getElementById("peliculasFavoritas")
+    .addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById("section-peliculas-favoritas").style.display =
+        "block";
+
+      document.getElementById("resultadoPeliculaGenero").style.display = "none";
+      document.getElementById("section-peliculas").style.display = "none";
+      document.getElementById("section-main").style.display = "none";
+      mostrarPeliculasFavoritas();
     });
 });
 
 // TO DO
-// Lista de favoritos - mostrar las peliculas que se agregaron a favoritos.
-// Hacerlo con localStorage. Permitir que se puedan borrar de esa lista
+// Borrar favorito - funcion para que toques la x y se borre la peli de favs
 // Agregar un boton para volver al header de la pagina
 // Agregar footer - OPCIONAL
 // Modo oscuro/claro - ULTIMO
