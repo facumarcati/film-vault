@@ -269,12 +269,34 @@ function agregarPeliculaFavorita(peliculaFav) {
   );
 
   if (peliculaExiste) {
-    alert("ESA PELICULA YA SE ENCUENTRA EN FAVORITOS");
+    Swal.fire({
+      toast: true,
+      position: "top-end",
+      icon: "error",
+      title: "ESA PELICULA YA ESTÁ EN FAVORITOS",
+      background: "#9b2222ff",
+      color: "#fff",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+    });
+
     return;
   }
 
   peliculasFavoritas.push(peliculaFav);
-  alert("PELICULA AGREGADA CORRECTAMENTE");
+
+  Swal.fire({
+    toast: true,
+    position: "top-end",
+    icon: "success",
+    title: "PELICULA AGREGADA A FAVORITOS",
+    background: "#208839ff",
+    color: "#fff",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  });
 
   guardarListaPeliculasFavoritas();
 }
@@ -331,10 +353,33 @@ function mostrarPeliculasFavoritas() {
       const iconoEliminar = peliculaElement.querySelectorAll(".x-icon");
       iconoEliminar.forEach((icono) => {
         icono.addEventListener("click", () => {
-          const confirma = confirm();
-          if (confirma) {
-            eliminarPeliculaFavorita(pelicula);
-          }
+          Swal.fire({
+            title: "Queres eliminar la pelicula?",
+            icon: "warning",
+            background: "#1f1f1f",
+            color: "#fff",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              eliminarPeliculaFavorita(pelicula);
+
+              Swal.fire({
+                toast: true,
+                position: "top-end",
+                icon: "success",
+                title: "PELICULA ELIMINADA CORRECTAMENTE",
+                background: "#208839ff",
+                color: "#fff",
+                showConfirmButton: false,
+                timer: 1500,
+                timerProgressBar: true,
+              });
+            }
+          });
         });
       });
 
@@ -359,6 +404,9 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("resultadoPeliculaGenero").style.flexDirection =
     "column";
 
+  document.getElementById("section-peliculas").style.display = "none";
+  document.getElementById("section-peliculas-favoritas").style.display = "none";
+
   buscarPeliculaPorGenero("Comedia");
   buscarPeliculaPorGenero("Accion");
   buscarPeliculaPorGenero("Familia");
@@ -368,10 +416,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", (e) => {
       e.preventDefault();
 
-      document.getElementById("resultadoPeliculaGenero").style.display = "none";
+      document.getElementById("section-peliculas").style.display = "block";
       document.getElementById("section-peliculas-favoritas").style.display =
         "none";
       document.getElementById("section-main").style.display = "none";
+
       buscarPelicula();
     });
 
@@ -379,19 +428,16 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("peliculasFavoritas")
     .addEventListener("click", (e) => {
       e.preventDefault();
+
       document.getElementById("section-peliculas-favoritas").style.display =
         "block";
-
-      document.getElementById("resultadoPeliculaGenero").style.display = "none";
       document.getElementById("section-peliculas").style.display = "none";
       document.getElementById("section-main").style.display = "none";
+
       mostrarPeliculasFavoritas();
     });
 });
 
 // TO DO
-// Agregarle UX/UI a las peliculas - sombreado a las cards / hover en generos / iconos en año y duracion
-// Animaciones - agregar animaciones para cuando se agrega o se elimina una peli de favs
-// o cuando se quiere agregar una peli que ya esta en favoritos
-// Click para mas - al hacer click en la pelicula que se abra una pantalla que contenga mas detalles
-// de la pelicula - OPCIONALs
+// Click para mas - al hacer click en la pelicula que se abra una pantalla
+// que contenga mas detalles de la pelicula - OPCIONALs
