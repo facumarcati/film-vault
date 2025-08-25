@@ -149,14 +149,33 @@ body {
   stroke: #ffd700;
 }
 
+.container-x-icon {
+  width: 32px;
+  height: 32px;
+  background: #ffffff1a;
+  border: 1px solid #ffffff1a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.container-x-icon:hover {
+  transform: scale(1.2);
+  border-color: #ff4d4d;
+}
+
 .x-icon {
   height: 16px;
   fill: #999;
   transition: all 0.3s ease;
 }
 
-.container-icon:hover .x-icon {
-  fill: #ffd700;
+.container-x-icon:hover .x-icon {
+  fill: #ff4d4d;
 }
 
 .anio-duracion-pelicula {
