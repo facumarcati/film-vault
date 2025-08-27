@@ -130,9 +130,9 @@ async function buscarPelicula() {
           });
 
           peliculaElement.innerHTML = `
-          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
+          <div class="container-img-pelicula"><img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.poster_path
-          }" alt="${pelicula.title}">
+          }" alt="${pelicula.title}"></div>
             <div class="datos-pelicula">
             <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
@@ -152,7 +152,9 @@ async function buscarPelicula() {
 
           const iconoFavoritos = peliculaElement.querySelectorAll(".star-icon");
           iconoFavoritos.forEach((icono) => {
-            icono.addEventListener("click", () => {
+            icono.addEventListener("click", (e) => {
+              e.stopPropagation();
+
               const peliculaFavorita = new Pelicula(
                 pelicula.id,
                 pelicula.title,
@@ -239,9 +241,9 @@ async function buscarPeliculaPorGenero(genero) {
           });
 
           peliculaElement.innerHTML = `
-          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
+          <div class="container-img-pelicula"><img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.poster_path
-          }" alt="${pelicula.title}">
+          }" alt="${pelicula.title}"></div>
             <div class="datos-pelicula">
             <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.title
@@ -262,7 +264,9 @@ async function buscarPeliculaPorGenero(genero) {
 
           const iconoFavoritos = peliculaElement.querySelectorAll(".star-icon");
           iconoFavoritos.forEach((icono) => {
-            icono.addEventListener("click", () => {
+            icono.addEventListener("click", (e) => {
+              e.stopPropagation();
+
               const peliculaFavorita = new Pelicula(
                 pelicula.id,
                 pelicula.title,
@@ -374,9 +378,9 @@ function mostrarPeliculasFavoritas() {
       });
 
       peliculaElement.innerHTML = `
-          <img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
+          <div class="container-img-pelicula"><img class="img-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.imagen
-          }" alt="${pelicula.titulo}">
+          }" alt="${pelicula.titulo}"></div>
             <div class="datos-pelicula">
             <div class="titulo-star"><h2 class="titulo-pelicula">${
               pelicula.titulo
@@ -393,7 +397,9 @@ function mostrarPeliculasFavoritas() {
 
       const iconoEliminar = peliculaElement.querySelectorAll(".x-icon");
       iconoEliminar.forEach((icono) => {
-        icono.addEventListener("click", () => {
+        icono.addEventListener("click", (e) => {
+          e.stopPropagation();
+
           Swal.fire({
             title: "Queres eliminar la pelicula?",
             icon: "warning",
@@ -467,9 +473,12 @@ function detallePelicula(pelicula) {
   });
 
   peliculaElement.innerHTML = `
-          <img src="https://image.tmdb.org/t/p/w500${pelicula.imagen}" alt="${
-    pelicula.titulo
-  }">
+  <div class="container-detalle-pelicula">
+  <div class="container-img-detalle-pelicula">
+          <img class="img-detalle-pelicula" src="https://image.tmdb.org/t/p/w500${
+            pelicula.imagen
+          }" alt="${pelicula.titulo}"></div>
+          <div class="container-datos-detalle-pelicula">
             <h2 class="titulo-pelicula">${pelicula.titulo}</h2>
             <h2 class="anio-pelicula"> ${
               pelicula.anio ? pelicula.anio : "N/A"
@@ -479,7 +488,7 @@ function detallePelicula(pelicula) {
             }</h2>
           <p class="descripcion-pelicula">${
             pelicula.descripcion || "Sin descripción disponible"
-          }</p>`;
+          }</p></div></div>`;
 
   peliculaElement.appendChild(generosContainer);
   resultadoPelicula.appendChild(peliculaElement);
@@ -531,4 +540,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // TO DO
 // Agregarle a la seccion detalle pelicula estilos
-// Corregir que no vaya al detalle si toco el star-icon o x-icon
