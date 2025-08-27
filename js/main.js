@@ -490,13 +490,22 @@ function detallePelicula(pelicula, seccionActiva) {
   });
 
   peliculaElement.innerHTML = `
+  ${generosContainer.outerHTML}
   <div class="container-detalle-pelicula">
   <div class="container-img-detalle-pelicula">
           <img class="img-detalle-pelicula" src="https://image.tmdb.org/t/p/w500${
             pelicula.imagen
           }" alt="${pelicula.titulo}"></div>
           <div class="container-datos-detalle-pelicula">
-            <h2 class="titulo-pelicula-detalle">${pelicula.titulo}</h2>
+          ${
+            seccionActiva === "section-peliculas-favoritas"
+              ? `<h2 class="titulo-pelicula-detalle">${pelicula.titulo}</h2>`
+              : `<div class="titulo-star-detalle"><h2 class="titulo-pelicula-detalle">${pelicula.titulo}</h2>
+            <div class="container-icon">
+            <h2><svg class="star-icon" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg></h2></div></div>`
+          }
             <div class="anio-duracion-pelicula"><h2 class="anio-pelicula-detalle"> ${
               pelicula.anio ? pelicula.anio : "N/A"
             }</h2>
@@ -508,7 +517,25 @@ function detallePelicula(pelicula, seccionActiva) {
             pelicula.descripcion || "Sin descripción disponible"
           }</p></div></div>`;
 
-  peliculaElement.appendChild(generosContainer);
+  const iconoFavoritos = peliculaElement.querySelectorAll(".star-icon");
+  iconoFavoritos.forEach((icono) => {
+    icono.addEventListener("click", (e) => {
+      e.stopPropagation();
+
+      const peliculaFavorita = new Pelicula(
+        pelicula.id,
+        pelicula.titulo,
+        pelicula.imagen,
+        pelicula.anio ? pelicula.anio.slice(0, 4) : "N/A",
+        pelicula.descripcion,
+        pelicula.duracion > 0 ? pelicula.duracion : "N/A",
+        pelicula.generos
+      );
+
+      agregarPeliculaFavorita(peliculaFavorita);
+    });
+  });
+
   resultadoPelicula.appendChild(peliculaElement);
 
   const flechaVolver = document.getElementById("flecha-volver");
