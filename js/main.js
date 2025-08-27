@@ -76,6 +76,13 @@ async function buscarIdGenero(genero) {
 }
 
 async function buscarPelicula() {
+  document.getElementById("section-peliculas").style.display = "block";
+  document.getElementById("section-peliculas-favoritas").style.display = "none";
+  document.getElementById("section-main").style.display = "none";
+  document.getElementById("section-detalle-pelicula").style.display = "none";
+
+  const seccionActiva = "section-peliculas";
+
   const txtPelicula = document.getElementById("txtPelicula").value;
   const resultadoPelicula = document.getElementById("resultadoPelicula");
 
@@ -182,7 +189,7 @@ async function buscarPelicula() {
               generosPelicula.map((g) => g.name)
             );
 
-            detallePelicula(peliculaDetalle);
+            detallePelicula(peliculaDetalle, seccionActiva);
           });
 
           if (pelicula.poster_path) {
@@ -198,6 +205,8 @@ async function buscarPelicula() {
 
 async function buscarPeliculaPorGenero(genero) {
   const idGenero = await buscarIdGenero(genero);
+
+  const seccionActiva = "section-main";
 
   if (!idGenero) {
     alert("No se encontró el género: " + genero);
@@ -294,7 +303,7 @@ async function buscarPeliculaPorGenero(genero) {
               generosPelicula.map((g) => g.name)
             );
 
-            detallePelicula(peliculaDetalle);
+            detallePelicula(peliculaDetalle, seccionActiva);
           });
 
           if (pelicula.poster_path) {
@@ -347,6 +356,14 @@ function agregarPeliculaFavorita(peliculaFav) {
 }
 
 function mostrarPeliculasFavoritas() {
+  document.getElementById("section-peliculas-favoritas").style.display =
+    "block";
+  document.getElementById("section-peliculas").style.display = "none";
+  document.getElementById("section-main").style.display = "none";
+  document.getElementById("section-detalle-pelicula").style.display = "none";
+
+  const seccionActiva = "section-peliculas-favoritas";
+
   const resultadoPelicula = document.getElementById(
     "resultadoPeliculasFavoritas"
   );
@@ -431,7 +448,7 @@ function mostrarPeliculasFavoritas() {
       });
 
       peliculaElement.addEventListener("click", () => {
-        detallePelicula(pelicula);
+        detallePelicula(pelicula, seccionActiva);
       });
 
       peliculaElement.appendChild(generosContainer);
@@ -450,7 +467,7 @@ function eliminarPeliculaFavorita(pelicula) {
   mostrarPeliculasFavoritas();
 }
 
-function detallePelicula(pelicula) {
+function detallePelicula(pelicula, seccionActiva) {
   const resultadoPelicula = document.getElementById("detalle-pelicula");
   resultadoPelicula.innerHTML = "";
 
@@ -460,10 +477,10 @@ function detallePelicula(pelicula) {
   document.getElementById("section-detalle-pelicula").style.display = "block";
 
   const peliculaElement = document.createElement("div");
-  peliculaElement.classList.add("container-pelicula");
+  peliculaElement.classList.add("container-detalle-card-pelicula");
 
   const generosContainer = document.createElement("div");
-  generosContainer.classList.add("generos-container");
+  generosContainer.classList.add("generos-detalle-container");
 
   pelicula.generos.forEach((genero) => {
     const generoElement = document.createElement("span");
@@ -479,19 +496,38 @@ function detallePelicula(pelicula) {
             pelicula.imagen
           }" alt="${pelicula.titulo}"></div>
           <div class="container-datos-detalle-pelicula">
-            <h2 class="titulo-pelicula">${pelicula.titulo}</h2>
-            <h2 class="anio-pelicula"> ${
+            <h2 class="titulo-pelicula-detalle">${pelicula.titulo}</h2>
+            <div class="anio-duracion-pelicula"><h2 class="anio-pelicula-detalle"> ${
               pelicula.anio ? pelicula.anio : "N/A"
             }</h2>
-            <h2 class="duracion-pelicula">${
+            <p class="duracion-pelicula"> •</p>
+            <h2 class="duracion-pelicula-detalle">${
               pelicula.duracion > 0 ? pelicula.duracion + " min" : "N/A"
-            }</h2>
-          <p class="descripcion-pelicula">${
+            }</h2></div>
+          <p class="descripcion-pelicula-detalle">${
             pelicula.descripcion || "Sin descripción disponible"
           }</p></div></div>`;
 
   peliculaElement.appendChild(generosContainer);
   resultadoPelicula.appendChild(peliculaElement);
+
+  const flechaVolver = document.getElementById("flecha-volver");
+
+  if (flechaVolver.volverListener) {
+    flechaVolver.removeEventListener("click", flechaVolver.volverListener);
+  }
+
+  flechaVolver.volverListener = function (e) {
+    e.preventDefault();
+    volver(seccionActiva);
+  };
+
+  flechaVolver.addEventListener("click", flechaVolver.volverListener);
+}
+
+function volver(seccionActiva) {
+  document.getElementById("section-detalle-pelicula").style.display = "none";
+  document.getElementById(seccionActiva).style.display = "block";
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -512,13 +548,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", (e) => {
       e.preventDefault();
 
-      document.getElementById("section-peliculas").style.display = "block";
-      document.getElementById("section-peliculas-favoritas").style.display =
-        "none";
-      document.getElementById("section-main").style.display = "none";
-      document.getElementById("section-detalle-pelicula").style.display =
-        "none";
-
       buscarPelicula();
     });
 
@@ -527,16 +556,6 @@ document.addEventListener("DOMContentLoaded", function () {
     .addEventListener("click", (e) => {
       e.preventDefault();
 
-      document.getElementById("section-peliculas-favoritas").style.display =
-        "block";
-      document.getElementById("section-peliculas").style.display = "none";
-      document.getElementById("section-main").style.display = "none";
-      document.getElementById("section-detalle-pelicula").style.display =
-        "none";
-
       mostrarPeliculasFavoritas();
     });
 });
-
-// TO DO
-// Agregarle a la seccion detalle pelicula estilos

@@ -196,6 +196,7 @@ body {
 
 .anio-duracion-pelicula {
   display: flex;
+  text-align: center;
   gap: 10px;
 }
 
@@ -242,17 +243,25 @@ body {
   padding: 20px;
 }
 
+.container-detalle-card-pelicula {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .container-detalle-pelicula {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  gap: 12px;
+  gap: 16px;
 }
 
 .container-img-detalle-pelicula {
   width: 100%;
   max-width: 180px;
+  max-width: 180px;
   overflow: hidden;
+  flex-shrink: 0;
   border-radius: 12px;
 }
 
@@ -268,6 +277,53 @@ body {
   gap: 8px;
 }
 
+.titulo-pelicula-detalle {
+  font-size: 24px;
+}
+
+.anio-pelicula-detalle {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  color: #ccc;
+}
+
+.duracion-pelicula-detalle {
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  color: #999;
+}
+
+.descripcion-pelicula-detalle {
+  font-family: "Inter", "Open Sans", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #ddd;
+}
+
+.generos-detalle-container {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 12px;
+}
+
+.flecha-volver-container {
+  display: inline-flex;
+  flex-direction: row;
+  cursor: pointer;
+  gap: 6px;
+  padding-left: 20px;
+}
+
+.flecha-volver {
+  width: 20px;
+  height: 20px;
+  fill: #ddd;
+}
+
 @media (min-width: 552px) {
   .container-peliculas {
     grid-template-columns: repeat(3, 1fr);
@@ -280,6 +336,15 @@ body {
   .anio-pelicula,
   .duracion-pelicula {
     font-size: 14px;
+  }
+}
+
+@media (min-width: 756px) {
+  .container-detalle-pelicula {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 16px;
   }
 }
 
